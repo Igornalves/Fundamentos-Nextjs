@@ -9,7 +9,7 @@ interface ProductProps {
 export default function Products({ params }: ProductProps) {
   const [productId, size, color] = params.data
 
-  console.log(params)
+  console.log('Params:', params)
 
   return (
     <div>
