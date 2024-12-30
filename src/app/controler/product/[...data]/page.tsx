@@ -1,35 +1,52 @@
 'use client'
+// ('use client') para garantir que o JavaScript seja enviado ao navegador. O objetivo é permitir interatividade com o usuário, como clicar no botão para adicionar ao carrinho.
 
+// Importação do hook 'use' do React, usado para lidar com promessas assíncronas
+import { use } from 'react'
+
+// Interface ProductProps define que 'params' é uma Promise que resolve para um objeto com 'data' do tipo string[]
 interface ProductProps {
-  params: {
-    data: string[]
-  }
+  params: Promise<{
+    data: string[] // Define que 'data' será um array de strings
+  }>
 }
 
-// Server Components => A GENTE NAO USA JAVASCRIPT NO LADO DO CLIENTE, resumindo, qualquer componente que nao possua qualquer interatividade com o usuario. Componentes Visuais
+// Comentários explicativos:
+// Server Components => São componentes que não possuem interatividade com o usuário. São usados para renderização inicial no servidor e geram HTML estático.
+// Client Components => São componentes que envolvem interatividade com o usuário. O JavaScript é enviado ao navegador (cliente) para gerar comportamentos dinâmicos.
 
-// Client Components => O JavaScript É ENVIADO AO NAVEGADOR (cliente), COMPONENTES DE INTERATIVIDADE COM O USUARIO
+// Streaming SSR => Ler/Escrever dados de forma parcial + Server-side Rendering
+
+// Renderizar um componente do lado do servidor de forma PARCIAL
 
 export default function Products({ params }: ProductProps) {
-  const [productId, size, color] = params.data
+  // // Simula um atraso de 2 segundos usando uma Promessa (útil para testar carregamento)
+  // await new Promise((resolve) => setTimeout(resolve, 2000))
 
-  // criando um print no console para ver os paramentros e dados a serem enviado quando acessado a rota
+  // A função 'use' resolve a Promise 'params' e extrai o valor de 'data'.
+  const { data } = use(params)
+
+  // Desestruturação do array 'data' para acessar os valores individuais (productId, size, color)
+  const [productId, size, color] = data
+
+  // Imprime os parâmetros 'params' no console para depuração
   console.log('Params:', params)
 
-  // metodo usando para adicionar no carrinho de supermecado
+  // Função para simular a ação de adicionar um item ao carrinho
   function addCart() {
     console.log('Colocou no carrinho')
   }
 
+  // Retorna o JSX com as informações do produto e um botão para adicionar ao carrinho
   return (
     <div>
-      {/* <h1>Ola Mundo !!!</h1> */}
+      {/* Exibe as informações do produto */}
       <p>Products: {productId}</p>
       <p>Size: {size}</p>
       <p>Color: {color}</p>
 
-      {/* butao de teste para ver se ta funcionando */}
-      <button onClick={addCart}>Adcionar ao carrinho</button>
+      {/* Botão para simular adicionar o produto ao carrinho */}
+      <button onClick={addCart}>Adicionar ao carrinho</button>
     </div>
   )
 }
