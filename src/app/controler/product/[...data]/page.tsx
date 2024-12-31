@@ -1,8 +1,6 @@
-'use client'
-// ('use client') para garantir que o JavaScript seja enviado ao navegador. O objetivo é permitir interatividade com o usuário, como clicar no botão para adicionar ao carrinho.
-
 // Importação do hook 'use' do React, usado para lidar com promessas assíncronas
 import { use } from 'react'
+import { AddToCartButton } from './add-to-cart-button'
 
 // Interface ProductProps define que 'params' é uma Promise que resolve para um objeto com 'data' do tipo string[]
 interface ProductProps {
@@ -20,7 +18,7 @@ interface ProductProps {
 // Renderizar um componente do lado do servidor de forma PARCIAL
 
 export default function Products({ params }: ProductProps) {
-  // // Simula um atraso de 2 segundos usando uma Promessa (útil para testar carregamento)
+  // Simula um atraso de 2 segundos usando uma Promessa (útil para testar carregamento)
   // await new Promise((resolve) => setTimeout(resolve, 2000))
 
   // A função 'use' resolve a Promise 'params' e extrai o valor de 'data'.
@@ -32,11 +30,6 @@ export default function Products({ params }: ProductProps) {
   // Imprime os parâmetros 'params' no console para depuração
   console.log('Params:', params)
 
-  // Função para simular a ação de adicionar um item ao carrinho
-  function addCart() {
-    console.log('Colocou no carrinho')
-  }
-
   // Retorna o JSX com as informações do produto e um botão para adicionar ao carrinho
   return (
     <div>
@@ -46,7 +39,7 @@ export default function Products({ params }: ProductProps) {
       <p>Color: {color}</p>
 
       {/* Botão para simular adicionar o produto ao carrinho */}
-      <button onClick={addCart}>Adicionar ao carrinho</button>
+      <AddToCartButton />
     </div>
   )
 }
